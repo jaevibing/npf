@@ -36,11 +36,12 @@
             this.DataText = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.floodTimer = new System.Windows.Forms.Timer(this.components);
+            this.intervalTxt = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // IPText
             // 
-            this.IPText.Location = new System.Drawing.Point(12, 202);
+            this.IPText.Location = new System.Drawing.Point(12, 176);
             this.IPText.Name = "IPText";
             this.IPText.Size = new System.Drawing.Size(151, 20);
             this.IPText.TabIndex = 0;
@@ -49,7 +50,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(52, 251);
+            this.button1.Location = new System.Drawing.Point(52, 244);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(111, 23);
             this.button1.TabIndex = 1;
@@ -61,7 +62,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Consolas", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(127, 9);
+            this.label1.Location = new System.Drawing.Point(167, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(102, 56);
             this.label1.TabIndex = 2;
@@ -71,7 +72,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(37, 85);
+            this.label2.Location = new System.Drawing.Point(85, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(283, 24);
             this.label2.TabIndex = 3;
@@ -79,15 +80,15 @@
             // 
             // DataText
             // 
-            this.DataText.Location = new System.Drawing.Point(193, 202);
+            this.DataText.Location = new System.Drawing.Point(275, 176);
             this.DataText.Name = "DataText";
             this.DataText.Size = new System.Drawing.Size(152, 20);
             this.DataText.TabIndex = 4;
-            this.DataText.Text = "Data";
+            this.DataText.Text = "Message";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(193, 251);
+            this.button2.Location = new System.Drawing.Point(275, 244);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(111, 23);
             this.button2.TabIndex = 5;
@@ -100,11 +101,20 @@
             this.floodTimer.Interval = 1;
             this.floodTimer.Tick += new System.EventHandler(this.floodTimer_Tick);
             // 
+            // intervalTxt
+            // 
+            this.intervalTxt.Location = new System.Drawing.Point(169, 176);
+            this.intervalTxt.Name = "intervalTxt";
+            this.intervalTxt.Size = new System.Drawing.Size(100, 20);
+            this.intervalTxt.TabIndex = 6;
+            this.intervalTxt.Text = "Packet Interval";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(357, 291);
+            this.ClientSize = new System.Drawing.Size(444, 291);
+            this.Controls.Add(this.intervalTxt);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.DataText);
             this.Controls.Add(this.label2);
@@ -127,6 +137,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox DataText;
         private System.Windows.Forms.Timer floodTimer;
+        private System.Windows.Forms.TextBox intervalTxt;
     }
 }
 

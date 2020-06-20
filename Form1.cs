@@ -12,7 +12,7 @@ namespace npf
         {
             InitializeComponent();
         }
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e) // i really dont need this but for some reson the program breaks if i remove it so i have to keep it here
         {
 
         }
@@ -31,6 +31,8 @@ namespace npf
 
         private void floodTimer_Tick(object sender, EventArgs e)
         {
+            string intervall = intervalTxt.Text;
+            floodTimer.Interval = Int16.Parse(intervall);
             flood();
         }
         private void flood()
