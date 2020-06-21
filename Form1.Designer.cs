@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.IPText = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,6 +38,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.floodTimer = new System.Windows.Forms.Timer(this.components);
             this.intervalTxt = new System.Windows.Forms.TextBox();
+            this.ProtocolBox = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // IPText
@@ -109,11 +111,23 @@
             this.intervalTxt.TabIndex = 6;
             this.intervalTxt.Text = "Packet Interval";
             // 
+            // ProtocolBox
+            // 
+            this.ProtocolBox.FormattingEnabled = true;
+            this.ProtocolBox.Items.AddRange(new object[] {
+            "TCP",
+            "UDP"});
+            this.ProtocolBox.Location = new System.Drawing.Point(193, 233);
+            this.ProtocolBox.Name = "ProtocolBox";
+            this.ProtocolBox.Size = new System.Drawing.Size(51, 34);
+            this.ProtocolBox.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 291);
+            this.Controls.Add(this.ProtocolBox);
             this.Controls.Add(this.intervalTxt);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.DataText);
@@ -121,6 +135,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.IPText);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "npf";
             this.ResumeLayout(false);
@@ -138,6 +153,7 @@
         private System.Windows.Forms.TextBox DataText;
         private System.Windows.Forms.Timer floodTimer;
         private System.Windows.Forms.TextBox intervalTxt;
+        private System.Windows.Forms.CheckedListBox ProtocolBox;
     }
 }
 

