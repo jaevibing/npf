@@ -89,7 +89,7 @@ namespace npf
                 {
                     floodUdp();
                 }
-                else if (s == "TCP/SYN")
+                else if (s == "TCP")
                 {
                     floodSyn();
                 }
@@ -161,9 +161,8 @@ namespace npf
         {
             string ipaddr = IPText.Text;
             var checkip = CheckIP(ipaddr);
-            Int32 port = 80;
+            Int32 port = 80; // this is the dos port
             IPAddress localAddr = IPAddress.Parse(ipaddr);
-            TcpClient tclient = new TcpClient(); // this is just the tcp client, nothing interesting
             if (checkip)
             {
                 try
@@ -186,6 +185,7 @@ namespace npf
                     const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
                     MessageBox.Show(errorMessage, errorCaption,
                         MessageBoxButtons.OK);
+                    floodTimer.Stop();
                 }
             }
             else
