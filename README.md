@@ -7,3 +7,5 @@ A sort of powerful network DOS tool for network stressing and testing.
 4. Enter the interval of packets sent (1 default) Setting the number lower will increase packets sent a second, higher will decrease packets sent a second. The lower the number the more bandwith you require for an attack.
 5. Press start, a message will pop up when it starts.
 6. Enjoy :)
+## Anti-Virus Warnings
+Your computer may have a warning for the file. It may even say it's a virus. These are false positives as I don't have a license to sign my code with and the fact that the app is not widespread. If your antivirus presents a warning, it is a false positive. If all else fails, build the app in Visual Studio yourself.
