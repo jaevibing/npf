@@ -115,11 +115,11 @@
             // 
             this.ProtocolBox.FormattingEnabled = true;
             this.ProtocolBox.Items.AddRange(new object[] {
-            "TCP",
+            "TCP/SYN",
             "UDP"});
-            this.ProtocolBox.Location = new System.Drawing.Point(193, 233);
+            this.ProtocolBox.Location = new System.Drawing.Point(177, 233);
             this.ProtocolBox.Name = "ProtocolBox";
-            this.ProtocolBox.Size = new System.Drawing.Size(51, 34);
+            this.ProtocolBox.Size = new System.Drawing.Size(76, 34);
             this.ProtocolBox.TabIndex = 7;
             // 
             // Form1

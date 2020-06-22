@@ -75,19 +75,6 @@ namespace npf
                 return false;
             }
         }
-        public static string GetLocalIPAddress() //this gets the local ip address for binding the tcp connection
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            throw new Exception("Failed to parse local IP address. Check if there are network adapters with an IPv4 address in the system.");
-        }
-
         private void floodTimer_Tick(object sender, EventArgs e)
         {
             if (ProtocolBox.CheckedItems.Count != 0)
@@ -102,9 +89,9 @@ namespace npf
                 {
                     floodUdp();
                 }
-                else if (s == "TCP")
+                else if (s == "TCP/SYN")
                 {
-                    floodTcp();
+                    floodSyn();
                 }
                 else
                 {
@@ -170,23 +157,27 @@ namespace npf
             return pingable;
         }
 
-        private void floodTcp() // just floodudp but for tcp
+        private void floodSyn() // just floodudp but for tcp
         {
             string ipaddr = IPText.Text;
-            long ipaddrtcp = long.Parse(ipaddr);
-            string localhost = GetLocalIPAddress();
-            long localhosttcp = long.Parse(localhost);
             var checkip = CheckIP(ipaddr);
-            TcpClient client = new TcpClient(); // this is just the tcp client, nothing interesting
+            Int32 port = 80;
+            IPAddress localAddr = IPAddress.Parse(ipaddr);
+            TcpClient tclient = new TcpClient(); // this is just the tcp client, nothing interesting
             if (checkip)
             {
                 try
                 {
                     using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP))
                     {
-                        sock.Bind(new IPEndPoint(localhosttcp, 80)); // this binds to the local ip address
-                        byte[] data = Encoding.ASCII.GetBytes(DataText.Text);
-                        sock.SendTo(data, new IPEndPoint(ipaddrtcp, 80)); // this sends the tcp packet
+                        var server = new TcpListener(localAddr, port);
+                        server.Start();
+                        TcpClient client = server.AcceptTcpClient();
+
+                        NetworkStream stream = client.GetStream();
+                        String data = DataText.Text;
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+                        stream.Write(msg, 0, msg.Length);
                     }
                 }
                 catch
