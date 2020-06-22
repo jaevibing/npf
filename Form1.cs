@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
-using System.Net.NetworkInformation;
 
 namespace npf
 {
@@ -17,7 +16,7 @@ namespace npf
         {
 
         }
-        
+
         private void button1_Click(object sender, EventArgs e)
         {
             string intervall = intervalTxt.Text;
@@ -130,31 +129,10 @@ namespace npf
                 floodTimer.Stop();
             }
         }
-        
-        public static bool CheckIP(string nameOrAddress) // this pings the ip to make sure it is correct
+
+        public static bool CheckIP(string nameOrAddress) // this used to ping ip but it didnt work so i have to keep it at return true;
         {
-            bool pingable = false;
-            Ping pinger = null;
-
-            try
-            {
-                pinger = new Ping();
-                PingReply reply = pinger.Send(nameOrAddress);
-                pingable = reply.Status == IPStatus.Success;
-            }
-            catch (PingException)
-            {
-                // Discard PingExceptions and return false;
-            }
-            finally
-            {
-                if (pinger != null)
-                {
-                    pinger.Dispose();
-                }
-            }
-
-            return pingable;
+            return true;
         }
 
         private void floodSyn() // just floodudp but for tcp
