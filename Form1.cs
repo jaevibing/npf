@@ -116,10 +116,7 @@ namespace npf
                 }
                 catch
                 {
-                    const string errorMessage = "There was an error with npf.";
-                    const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
-                    MessageBox.Show(errorMessage, errorCaption,
-                        MessageBoxButtons.OK);
+                    MessageBox.Show("There was an error with npf. Ensure that you have an internet connection and that all the data is entered correctly.");
                     floodTimer.Stop();
                 }
             }
@@ -159,16 +156,13 @@ namespace npf
                 }
                 catch
                 {
-                    const string errorMessage = "There was an error with npf.";
-                    const string errorCaption = "Ensure that you have an internet connection and that all the data is entered correctly.";
-                    MessageBox.Show(errorMessage, errorCaption,
-                        MessageBoxButtons.OK);
+                    MessageBox.Show("There was an error with npf. Ensure that you have an internet connection and that all the data is entered correctly.");
                     floodTimer.Stop();
                 }
             }
             else
             {
-                MessageBox.Show("The IP address is invalid or cannot be pinged at this time. Please enter a valid IP address");
+                MessageBox.Show("The IP address is invalid or cannot be pinged at this time. Please enter a valid IP address.");
                 floodTimer.Stop();
             }
         }

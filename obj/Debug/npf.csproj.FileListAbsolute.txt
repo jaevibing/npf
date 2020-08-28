@@ -8,3 +8,4 @@ C:\Users\stant\source\repos\npf\obj\Debug\npf.csproj.GenerateResource.cache
 C:\Users\stant\source\repos\npf\obj\Debug\npf.csproj.CoreCompileInputs.cache
 C:\Users\stant\source\repos\npf\obj\Debug\npf.exe
 C:\Users\stant\source\repos\npf\obj\Debug\npf.pdb
+C:\Users\stant\source\repos\npf\obj\Debug\npf.Form2.resources
