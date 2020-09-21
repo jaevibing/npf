@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace npfhttp
+namespace npf
 {
     static class Program
     {
@@ -16,7 +13,8 @@ namespace npfhttp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new npfhttp());
+            MessageBox.Show("DISCLAIMER: I am not responsible if you use this software in a malicious way. Proceed with caution.");
+            Application.Run(new Form1());
         }
     }
 }

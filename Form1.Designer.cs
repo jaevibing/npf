@@ -1,6 +1,6 @@
-﻿namespace npfhttp
+﻿namespace npf
 {
-    partial class npfhttp
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,73 +28,132 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.IPText = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.startbutton = new System.Windows.Forms.Button();
-            this.hostTB = new System.Windows.Forms.TextBox();
-            this.portTB = new System.Windows.Forms.TextBox();
-            this.stopBT = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.DataText = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.floodTimer = new System.Windows.Forms.Timer(this.components);
+            this.intervalTxt = new System.Windows.Forms.TextBox();
+            this.ProtocolBox = new System.Windows.Forms.CheckedListBox();
+            this.portText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // IPText
+            // 
+            this.IPText.Location = new System.Drawing.Point(12, 176);
+            this.IPText.Name = "IPText";
+            this.IPText.Size = new System.Drawing.Size(151, 20);
+            this.IPText.TabIndex = 0;
+            this.IPText.Text = "IP Address";
+            this.IPText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(52, 244);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(111, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Start Attack";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Consolas", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(70, 20);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(167, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(206, 56);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "npfhttp";
+            this.label1.Size = new System.Drawing.Size(102, 56);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "npf";
             // 
-            // startbutton
+            // label2
             // 
-            this.startbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startbutton.Location = new System.Drawing.Point(46, 257);
-            this.startbutton.Name = "startbutton";
-            this.startbutton.Size = new System.Drawing.Size(84, 36);
-            this.startbutton.TabIndex = 1;
-            this.startbutton.Text = "Start";
-            this.startbutton.UseVisualStyleBackColor = true;
-            this.startbutton.Click += new System.EventHandler(this.startbutton_Click);
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(85, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(283, 24);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "A network DOS tool for Windows";
             // 
-            // hostTB
+            // DataText
             // 
-            this.hostTB.Location = new System.Drawing.Point(12, 172);
-            this.hostTB.Name = "hostTB";
-            this.hostTB.Size = new System.Drawing.Size(118, 20);
-            this.hostTB.TabIndex = 3;
-            this.hostTB.Text = "Host";
+            this.DataText.Location = new System.Drawing.Point(275, 176);
+            this.DataText.Name = "DataText";
+            this.DataText.Size = new System.Drawing.Size(152, 20);
+            this.DataText.TabIndex = 4;
+            this.DataText.Text = "Message";
             // 
-            // portTB
+            // button2
             // 
-            this.portTB.Location = new System.Drawing.Point(215, 172);
-            this.portTB.Name = "portTB";
-            this.portTB.Size = new System.Drawing.Size(118, 20);
-            this.portTB.TabIndex = 4;
-            this.portTB.Text = "Port";
+            this.button2.Location = new System.Drawing.Point(275, 244);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(111, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Stop Attack";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // stopBT
+            // floodTimer
             // 
-            this.stopBT.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopBT.Location = new System.Drawing.Point(215, 257);
-            this.stopBT.Name = "stopBT";
-            this.stopBT.Size = new System.Drawing.Size(84, 36);
-            this.stopBT.TabIndex = 5;
-            this.stopBT.Text = "Stop";
-            this.stopBT.UseVisualStyleBackColor = true;
-            this.stopBT.Click += new System.EventHandler(this.stopBT_Click);
+            this.floodTimer.Interval = 1;
+            this.floodTimer.Tick += new System.EventHandler(this.floodTimer_Tick);
             // 
-            // npfhttp
+            // intervalTxt
+            // 
+            this.intervalTxt.Location = new System.Drawing.Point(169, 176);
+            this.intervalTxt.Name = "intervalTxt";
+            this.intervalTxt.Size = new System.Drawing.Size(100, 20);
+            this.intervalTxt.TabIndex = 6;
+            this.intervalTxt.Text = "Packet Interval";
+            // 
+            // ProtocolBox
+            // 
+            this.ProtocolBox.FormattingEnabled = true;
+            this.ProtocolBox.Items.AddRange(new object[] {
+            "UDP",
+            "TCP",
+            "HTTP"});
+            this.ProtocolBox.Location = new System.Drawing.Point(177, 233);
+            this.ProtocolBox.Name = "ProtocolBox";
+            this.ProtocolBox.Size = new System.Drawing.Size(76, 49);
+            this.ProtocolBox.TabIndex = 7;
+            // 
+            // portText
+            // 
+            this.portText.Location = new System.Drawing.Point(169, 207);
+            this.portText.Name = "portText";
+            this.portText.Size = new System.Drawing.Size(100, 20);
+            this.portText.TabIndex = 8;
+            this.portText.Text = "Port";
+            // 
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 336);
-            this.Controls.Add(this.stopBT);
-            this.Controls.Add(this.portTB);
-            this.Controls.Add(this.hostTB);
-            this.Controls.Add(this.startbutton);
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(444, 291);
+            this.Controls.Add(this.portText);
+            this.Controls.Add(this.ProtocolBox);
+            this.Controls.Add(this.intervalTxt);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.DataText);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "npfhttp";
-            this.Text = "npfhttp";
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.IPText);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Form1";
+            this.Text = "npf";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,11 +161,16 @@
 
         #endregion
 
+        private System.Windows.Forms.TextBox IPText;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button startbutton;
-        private System.Windows.Forms.TextBox hostTB;
-        private System.Windows.Forms.TextBox portTB;
-        private System.Windows.Forms.Button stopBT;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox DataText;
+        private System.Windows.Forms.Timer floodTimer;
+        private System.Windows.Forms.TextBox intervalTxt;
+        private System.Windows.Forms.CheckedListBox ProtocolBox;
+        private System.Windows.Forms.TextBox portText;
     }
 }
 
