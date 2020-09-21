@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace npf.Properties
+namespace npfhttp.Properties
 {
 
 

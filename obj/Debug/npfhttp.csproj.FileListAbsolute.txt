@@ -1,0 +1,10 @@
+C:\Users\stant\source\repos\npfhttp\bin\Debug\npfhttp.exe.config
+C:\Users\stant\source\repos\npfhttp\bin\Debug\npfhttp.exe
+C:\Users\stant\source\repos\npfhttp\bin\Debug\npfhttp.pdb
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.npfhttp.resources
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.Properties.Resources.resources
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.csproj.GenerateResource.cache
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.csproj.CoreCompileInputs.cache
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.exe
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.pdb
+C:\Users\stant\source\repos\npfhttp\obj\Debug\npfhttp.csprojAssemblyReference.cache
