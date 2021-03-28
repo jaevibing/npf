@@ -1,5 +1,7 @@
 # npf
 A sort of powerful network DOS tool for network stressing and testing.
+## DISCLAIMER
+This software is meant solely for the purposes of netowrk stress testing. Using this software for malicious use is against the Terms of Use and is illegal.
 ## How to setup an attack
 1. Enter the IP address
 2. Enter a message you want to send (optional)
